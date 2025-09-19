@@ -100,3 +100,7 @@ This framework is designed with long-term software quality in mind:
 - **Reliable** — explicit waits and fixtures reduce flaky tests and improve consistency across runs.  
 - **CI/CD Ready** — organized for seamless integration with pipelines and automated reporting.  
 
+---
+
+## License
+This project is licensed under the MIT License.
