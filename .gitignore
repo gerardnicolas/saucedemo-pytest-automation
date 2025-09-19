@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.DS_Store
+
+# Virtual Environment
+venv/
+.env/
+.venv/
+
+# Pytest
+.cache/
+.pytest_cache/
+
+# Reports (pytest-html, allure, screenshots, videos)
+reports/
+*.html
+*.json
+*.xml
+*.png
+*.gif
+*.mp4
+
+# IDE / Editors
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
