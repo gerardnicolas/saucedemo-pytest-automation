@@ -28,9 +28,4 @@ class CartPage:
         self.driver.find_element(*continue_shopping_btn).click()
 
     def click_checkout(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.checkout_btn)
-        ).click()
-        WebDriverWait(self.driver, 10).until(
-            EC.url_contains("checkout-step-one.html")
-        )
+        self.driver.find_element(*self.checkout_btn).click()
