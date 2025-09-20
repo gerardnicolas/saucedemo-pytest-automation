@@ -1,4 +1,5 @@
 import pytest
+from selenium.common import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -41,11 +42,16 @@ def test_check_out_item(browser):
     # checkout_page1.continue_form()
 
     # Finish Checkout
-    checkout_page2 = CheckoutPageTwo(browser)
-    summary_info = WebDriverWait(browser, 5).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".summary_info"))
-    )
-    checkout_page2.finish_form()
+    # checkout_page2 = CheckoutPageTwo(browser)
+    print("\nDEBUG: Current URL:", browser.current_url) # Must be at checkout-step-two.html
+    try:
+        WebDriverWait(browser, 10).until(
+            EC.url_contains("/checkout-step-two.html")
+        )
+    except TimeoutException:
+        pytest.fail(f"Did not reach inventory page, current URL is: {browser.current_url}")
+    browser.find_element(By.ID, "finish").click()
+    # checkout_page2.finish_form()
 
     # Verify Checkout
     checkout_page3 = CheckoutPageThree(browser)
