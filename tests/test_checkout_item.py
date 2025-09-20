@@ -26,6 +26,12 @@ def test_check_out_item(browser):
     cart_page.click_checkout()
 
     print("\nDEBUG: Current URL:", browser.current_url)
+    try:
+        WebDriverWait(browser, 10).until(
+            EC.url_contains("/checkout-step-one.html")
+        )
+    except TimeoutException:
+        pytest.fail(f"Did not reach inventory page, current URL is: {browser.current_url}")
     print("DEBUG: Page source snippet:", browser.page_source[:500])
 
     # Fill-up Form
