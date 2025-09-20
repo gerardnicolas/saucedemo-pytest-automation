@@ -19,10 +19,6 @@ class CartPage:
         items = self.driver.find_elements(*self.item_names)
         return any(item.text == item_name for item in items)
 
-    def remove_item_in_cart(self, item_name):
-        remove_btn = (By.ID, f"remove-{item_name}")
-        self.driver.find_element(*remove_btn).click()
-
     def go_back_to_inventory(self):
         continue_shopping_btn = (By.ID, "continue-shopping")
         self.driver.find_element(*continue_shopping_btn).click()
