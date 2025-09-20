@@ -1,4 +1,6 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class InventoryPage():
     cart_icon = (By.CLASS_NAME, "shopping_cart_link")
@@ -23,6 +25,9 @@ class InventoryPage():
 
     def open_cart(self):
         self.driver.find_element(*self.cart_icon).click()
+        WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.ID, "checkout"))
+        )
 
     def check_item_detail(self, product_id):
         img_btn = (By.CSS_SELECTOR, f"img[alt='{product_id}']")
