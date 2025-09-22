@@ -11,5 +11,5 @@ class CheckoutPageThree:
     def go_back_to_products(self):
         self.driver.find_element(*self.go_back_to_products_btn).click()
 
-    def get_success_message(self):
+    def _get_success_message(self):
         return self.driver.find_element(*self.success_header_message).text
