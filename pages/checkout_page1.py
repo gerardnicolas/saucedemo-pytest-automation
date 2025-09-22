@@ -2,22 +2,22 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from conftest import browser
-
 
 class CheckoutPageOne:
-    firstname_input = (By.ID, "first-name")
-    lastname_input = (By.ID, "last-name")
-    postalcode_input = (By.ID, "postal-code")
+    firstname_input = (By.CSS_SELECTOR, "#first-name")
+    lastname_input = (By.CSS_SELECTOR, "#last-name")
+    postalcode_input = (By.CSS_SELECTOR, "#postal-code")
     continue_btn = (By.ID, "continue")
 
     def __init__(self, driver):
         self.driver = driver
 
-    def fill_up_form(self, firstname, lastname, postalcode):
-        self.driver.find_element(*self.lastname_input).send_keys(lastname)
-        self.driver.find_element(*self.postalcode_input).send_keys(postalcode)
+    def _fill_input_field(self, locator, value, timeout=10):
+        element = WebDriverWait(self.driver, timeout).until(
+            EC.presence_of_element_located(locator)
+        )
+        element.clear()
+        element.send_keys(str(value))
 
-    def continue_form(self):
+    def _click_continue(self):
         self.driver.find_element(*self.continue_btn).click()
-
