@@ -13,7 +13,4 @@ def test_add_item_to_cart(browser):
     inventory_page.open_cart()
 
     cart = CartPage(browser)
-    assert cart.has_item("Sauce Labs Backpack")
-
-
-
+    assert cart._has_item("Sauce Labs Backpack")
