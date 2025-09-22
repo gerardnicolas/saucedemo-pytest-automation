@@ -8,7 +8,7 @@ class CheckoutPageTwo:
     def __init__(self, driver):
         self.driver = driver
 
-    def finish_form(self):
+    def _click_finish(self):
         # WebDriverWait(self.driver, 5).until(
         #     EC.presence_of_element_located((By.CSS_SELECTOR, ".btn.btn_action.btn_medium.cart_button"))
         # )
