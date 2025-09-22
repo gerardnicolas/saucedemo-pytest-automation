@@ -101,18 +101,14 @@ def test_remove_product_from_cart(browser):
     inventory_page.add_product_to_cart("sauce-labs-backpack")
     inventory_page.open_cart()
 
-    print("Current URL:", browser.current_url)
-    cart_item = (By.XPATH, "//div[@class='inventory_item_name' and text()='Sauce Labs Backpack']")
-
     WebDriverWait(browser, 10).until(
-        EC.presence_of_element_located(cart_item)
+        EC.presence_of_element_located((By.CLASS_NAME, "cart_item"))
     )
-
     browser.find_element(By.ID, "remove-sauce-labs-backpack").click()
 
     WebDriverWait(browser, 10).until(
-        EC.invisibility_of_element_located(cart_item)
+        EC.invisibility_of_element_located((By.CLASS_NAME, "cart_item"))
     )
 
-    items = browser.find_elements(By.CLASS_NAME, "inventory_item_name")
-    assert len(items) == 0, "Item was not removed from the cart"
+    items = browser.find_elements(By.CLASS_NAME, "cart_item")
+    assert len(items) == 0, f"Cart should be empty."
