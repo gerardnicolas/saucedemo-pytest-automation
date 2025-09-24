@@ -32,3 +32,10 @@ class InventoryPage():
     def check_item_detail(self, product_id):
         img_btn = (By.CSS_SELECTOR, f"img[alt='{product_id}']")
         self.driver.find_element(*img_btn).click()
+
+    def _verify_add_to_cart(self):
+        badge = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, ".shopping_cart_badge"))
+        )
+
+        return badge.text == "1", f"Expected cart badge to be 1"
