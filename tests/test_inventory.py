@@ -78,37 +78,27 @@ def test_add_item_to_cart(browser):
     inventory_page = InventoryPage(browser)
     inventory_page.add_product_to_cart("sauce-labs-backpack")
 
-    badge = WebDriverWait(browser, 5).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".shopping_cart_badge"))
-    )
-
-    assert badge.text == "1", f"Expected cart badge to be 1"
+    assert inventory_page._verify_add_to_cart(), "Expected cart badge to be 1"
 
     inventory_page.open_cart()
-    print("Current URL:", browser.current_url)
-    WebDriverWait(browser,5).until(
-        EC.presence_of_all_elements_located((By.CLASS_NAME, "cart_item"))
-    )
-
-    cart_items = browser.find_elements(By.CLASS_NAME, "cart_item")
-    assert len(cart_items) > 0, "No items found in cart"
+    assert inventory_page._verify_add_to_cart(), "No items found in cart"
 
 def test_remove_product_from_cart(browser):
+    # Login
     login_page = LoginPage(browser)
     login_page.login("standard_user", "secret_sauce")
 
+    # Add product to cart
     inventory_page = InventoryPage(browser)
     inventory_page.add_product_to_cart("sauce-labs-backpack")
     inventory_page.open_cart()
 
-    WebDriverWait(browser, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "cart_item"))
-    )
-    browser.find_element(By.ID, "remove-sauce-labs-backpack").click()
+    # Verify item is in cart
+    cart_page = CartPage(browser)
+    cart_page._has_item("Sauce Labs Backpack")
 
-    WebDriverWait(browser, 10).until(
-        EC.invisibility_of_element_located((By.CLASS_NAME, "cart_item"))
-    )
+    # Remove item
+    cart_page._remove_item("sauce-labs-backpack")
 
-    items = browser.find_elements(By.CLASS_NAME, "cart_item")
-    assert len(items) == 0, f"Cart should be empty."
+    # Assert that cart is empty
+    cart_page._is_empty()
