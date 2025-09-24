@@ -27,12 +27,18 @@ def test_check_out_item(browser):
     cart_page._click_checkout()
 
     checkout_one = CheckoutPageOne(browser)
-    checkout_one._fill_input_field(firstname_input, "John")
-    checkout_one._fill_input_field(lastname_input, "Doe")
-    checkout_one._fill_input_field(postalcode_input, 1234)
+    checkout_one._verify_url()
+    assert "checkout-step-one.html" in browser.current_url
+    print(f"Current URL: {browser.current_url}")
+    checkout_one.fill_input_field(firstname_input, "John")
+    checkout_one.fill_input_field(lastname_input, "Doe")
+    checkout_one.fill_input_field(postalcode_input, 1234)
     checkout_one._click_continue()
 
     checkout_two = CheckoutPageTwo(browser)
+    assert "checkout-step-two.html" in browser.current_url
+    checkout_two._verify_url()
+    print(f"Current URL: {browser.current_url}")
     checkout_two._click_finish()
 
     checkout_three = CheckoutPageThree(browser)
