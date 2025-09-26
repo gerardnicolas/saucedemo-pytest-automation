@@ -11,7 +11,9 @@ class InventoryPage():
 
     def add_product_to_cart(self, product_id):
         add_btn = (By.ID, f"add-to-cart-{product_id}")
-        self.driver.find_element(*add_btn).click()
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(self.driver.find_element(*add_btn))
+        ).click()
 
     def remove_product_from_cart(self, product_id):
         remove_btn = (By.ID, f"remove-{product_id}")

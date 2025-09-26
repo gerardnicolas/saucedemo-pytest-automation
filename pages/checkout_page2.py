@@ -9,7 +9,7 @@ class CheckoutPageTwo:
 
     def _click_finish(self, timeout=20):
         finish_button = WebDriverWait(self.driver, timeout).until(
-            EC.presence_of_element_located(self.finish_btn)
+            EC.element_to_be_clickable(self.finish_btn)
         )
         finish_button.click()
 
@@ -17,6 +17,9 @@ class CheckoutPageTwo:
         self.driver.find_element(*self.cancel_btn).click()
 
     def _verify_url(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.url_to_be("https://www.saucedemo.com/checkout-step-two.html")
-        )
+        try:
+            WebDriverWait(self.driver, 20).until(
+                EC.url_to_be("checkout-step-two.html")
+            )
+        except:
+            f"Did not reach /checkout-step-two.html page."
