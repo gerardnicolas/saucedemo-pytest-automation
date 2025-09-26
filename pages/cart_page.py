@@ -8,7 +8,7 @@ class CartPage:
     cart_icon = (By.CLASS_NAME, "shopping_cart_link")
     cart_quantity = (By.CSS_SELECTOR, ".cart_quantity")
     item_names = (By.CLASS_NAME, "inventory_item_name")
-    checkout_btn = (By.ID, "checkout")
+
 
     def __init__(self, driver):
         self.driver = driver
@@ -40,7 +40,10 @@ class CartPage:
         self.driver.find_element(*continue_shopping_btn).click()
 
     def _click_checkout(self):
-        btn = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.checkout_btn)
+        checkout_btn = (By.ID, "checkout")
+        self.driver.find_element(*checkout_btn).click()
+
+        # Wait for next page
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.ID, "checkout_info_container"))
         )
-        btn.click()
