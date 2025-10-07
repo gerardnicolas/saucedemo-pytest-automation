@@ -25,6 +25,7 @@ def test_add_multiple_items_to_cart(browser):
     inventory_page.add_product_to_cart("sauce-labs-bolt-t-shirt")
 
     cart = CartPage(browser)
+    cart.open_cart()
     assert cart._has_item("Sauce Labs Backpack")
     assert cart._has_item("Sauce Labs Bike Light")
     assert cart._has_item("Sauce Labs Bolt T-Shirt")
