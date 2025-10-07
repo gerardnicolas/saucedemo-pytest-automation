@@ -41,3 +41,11 @@ def test_remove_item_from_cart(browser):
     cart.open_cart()
     cart._remove_item("sauce-labs-backpack")
     assert not cart._has_item("Sauce Labs Backpack")
+
+def test_verify_cart_is_empty(browser):
+    login_page = LoginPage(browser)
+    login_page.login("standard_user", "secret_sauce")
+
+    cart = CartPage(browser)
+    cart.open_cart()
+    cart._assert_cart_is_empty()
