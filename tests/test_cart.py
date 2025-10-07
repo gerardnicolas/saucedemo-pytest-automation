@@ -29,3 +29,15 @@ def test_add_multiple_items_to_cart(browser):
     assert cart._has_item("Sauce Labs Backpack")
     assert cart._has_item("Sauce Labs Bike Light")
     assert cart._has_item("Sauce Labs Bolt T-Shirt")
+
+def test_remove_item_from_cart(browser):
+    login_page = LoginPage(browser)
+    login_page.login("standard_user", "secret_sauce")
+
+    inventory_page = InventoryPage(browser)
+    inventory_page.add_product_to_cart("sauce-labs-backpack")
+
+    cart = CartPage(browser)
+    cart.open_cart()
+    cart._remove_item("sauce-labs-backpack")
+    assert not cart._has_item("Sauce Labs Backpack")
