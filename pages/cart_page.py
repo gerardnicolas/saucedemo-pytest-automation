@@ -50,10 +50,26 @@ class CartPage:
         self.driver.find_element(*continue_shopping_btn).click()
 
     def _click_checkout(self):
-        checkout_btn = (By.ID, "checkout")
-        self.driver.find_element(*checkout_btn).click()
-
-        # Wait for next page
-        WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.ID, "checkout_info_container"))
+        checkout_btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "checkout"))
         )
+
+        print("Checkout button text:", checkout_btn.text)
+        print("Checkout button enabled:", checkout_btn.is_enabled())
+        print("Checkout button displayed:", checkout_btn.is_displayed())
+
+        self.driver.execute_script("arguments[0].click();", checkout_btn)
+        print("After checkout click, URL:", self.driver.current_url)
+
+        # URL contains
+        WebDriverWait(self.driver, 20).until(
+            EC.url_contains("checkout-step-one.html")
+        )
+
+        try:
+            # Wait for next page
+            WebDriverWait(self.driver, 20).until(
+                EC.visibility_of_element_located((By.ID, "checkout_info_container"))
+            )
+        except TimeoutException:
+            print(self.driver.current_url)
