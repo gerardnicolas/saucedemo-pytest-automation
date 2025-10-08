@@ -5,6 +5,7 @@ import pytest
 def browser():
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")  # modern headless mode
+    options.add_argument("--start-maximized")
 
     driver = webdriver.Chrome(options=options)  # ✅ No need for webdriver_manager
     driver.maximize_window()
