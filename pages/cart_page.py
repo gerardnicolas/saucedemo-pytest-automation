@@ -29,6 +29,14 @@ class CartPage:
 
         return len(cart_items) > 0, "No items found in cart"
 
+    def _assert_cart_is_empty(self):
+        try:
+            WebDriverWait(self.driver, 10).until_not(
+                EC.presence_of_element_located((By.CLASS_NAME, "shopping_cart_badge"))
+            )
+        except TimeoutException:
+            raise AssertionError("Cart is not empty!")
+
     def _remove_item(self, item):
         remove_btn = (By.ID, f"remove-{item}")
         self.driver.find_element(*remove_btn).click()
