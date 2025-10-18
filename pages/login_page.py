@@ -1,25 +1,16 @@
-from unittest import expectedFailure
-
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from .base_page import BasePage
 
-class LoginPage:
+class LoginPage(BasePage):
     username_input = (By.ID, "user-name")
     password_input = (By.ID, "password")
     login_button = (By.ID, "login-button")
     error_message = (By.CSS_SELECTOR, "h3[data-test='error']")
 
-    def __init__(self, driver):
-        self.driver = driver
-        self.driver.get("https://www.saucedemo.com/")
-
     def login(self, username, password):
-        self.driver.find_element(*self.username_input).clear()
-        self.driver.find_element(*self.username_input).send_keys(username)
-        self.driver.find_element(*self.password_input).clear()
-        self.driver.find_element(*self.password_input).send_keys(password)
-        self.driver.find_element(*self.login_button).click()
+        self.type(self.username_input, username)
+        self.type(self.password_input, password)
+        self.click(self.login_button)
 
     def receive_error(self):
-        return self.driver.find_element(*self.error_message).text
+        return self.get_text(self.error_message)
