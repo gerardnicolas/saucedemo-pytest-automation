@@ -6,9 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
-from pages.checkout_page1 import CheckoutPageOne
-from pages.checkout_page2 import CheckoutPageTwo
-from pages.checkout_page3 import CheckoutPageThree
 
 def test_checkout_with_missing_info(browser):
     login_page = LoginPage(browser)
@@ -53,3 +50,18 @@ def test_checkout_with_missing_info(browser):
     print("Matches found:", len(matches))
     if matches:
         print("Match text:", matches[0].text)
+
+def test_cancel_checkout(browser):
+    login_page = LoginPage(browser)
+    login_page.login("standard_user", "secret_sauce")
+
+    inventory_page = InventoryPage(browser)
+    inventory_page.add_product_to_cart("sauce-labs-backpack")
+
+    cart_page = CartPage(browser)
+    cart_page.open_cart()
+    cart_page._click_checkout()
+    assert "checkout-step-one.html" in browser.current_url
+
+    cart_page.cancel_checkout()
+    assert "cart.html" in browser.current_url
