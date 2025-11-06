@@ -10,6 +10,7 @@ class CartPage:
     cart_icon = (By.CLASS_NAME, "shopping_cart_link")
     cart_quantity = (By.CSS_SELECTOR, ".cart_quantity")
     item_names = (By.CLASS_NAME, "inventory_item_name")
+    cancel_btn = (By.ID, "cancel")
 
 
     def __init__(self, driver):
@@ -73,3 +74,6 @@ class CartPage:
             )
         except TimeoutException:
             print(self.driver.current_url)
+
+    def cancel_checkout(self):
+        self.driver.find_element(*self.cancel_btn).click()
